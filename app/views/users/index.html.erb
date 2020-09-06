@@ -1,45 +1,36 @@
 <div class="row">
-<div class="col-xs-3">
-  <h2>User info</h2>
-  <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg", format: 'jpg' %>
+  <div class="col-xs-3">
+    <br>
+    <h2>User info</h2>
+    <%= render 'users/profile', user: current_user %>
 
-  <h5>name</h5>
-  <%= @user.name %>
-  <h5>introduction</h5>
-  <%= @user.introduction %>
-  <%= link_to"",edit_user_path(current_user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench"%>
-
-       <!-- form_for部分 -->
-  <%= form_for(@book,  url: books_path) do |f| %>
-
-
-      <h2>New book</h2>
-      <h4>Title</h4>
-      <%= f.text_field :title,class: "col-xs-12" %>
-      <br>
-      <h4>Opinion</h4>
-      <%= f.text_field :body,class: "col-xs-12" %>
-      <br>
-      <br>
-      <nav>
-
-      <%= f.submit 'Create Book',class: "col-xs-12 btn btn-primary" %>
-      </nav>
-      <% end %>
+    <h2>New book</h2>
+    <%= render 'books/newform', book: @book %>
   </div>
-
-  <div class= "col-xs-9">
+  <div class="col-xs-9">
+    <br>
     <h2>Users</h2>
-    <table class='table'>
+    <!--users一覧 -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>image</th>
+          <th>name</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-    <% @users.each do |user| %>
-    <tr>
-    <td><%= attachment_image_tag user, :profile_image, :fill, 20, 20, fallback: "no_image.jpg",size:'20x20', format: 'jpg' %></td>
-    <th><%= user.name %><th>
-    <th><%= link_to"Show",user_path(user.id) %></th>
-    </tr>
-    <% end %>
+      <tbody>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %></td>
+          <td><%= user.name%></td>
+          <td><%= link_to "Show", user_path(user), class: "user_#{user.id}" %></td>
+        </tr>
+        <% end %>
+      </tbody>
     </table>
+    <!--users一覧 -->
   </div>
 </div>
-</div>
+
