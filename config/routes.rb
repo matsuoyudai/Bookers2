@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  get 'home/about'
   root 'home#top'
+  get 'home/about'
+
+  get '/search', to: 'search#search'
+
   devise_for :users
   resources :users, only: [:index, :show, :edit, :update] do
   	resource :relationships, only: [:create, :destroy]
