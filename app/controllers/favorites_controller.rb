@@ -1,5 +1,4 @@
 class FavoritesController < ApplicationController
-	before_action :authenticate_user!
 
 	def create
 	book = Book.find(params[:book_id])
@@ -15,4 +14,13 @@ class FavoritesController < ApplicationController
     redirect_to request.referer
 	end
 
+	private
+	def redirect
+		case params[:redirect_id].to_i
+		when 0
+			redirect_to books_path
+		when 1
+			redirect_to book_path(@book)
+		end
+	end
 end

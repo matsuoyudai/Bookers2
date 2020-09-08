@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
 	before_action :configure_permitted_parameters,if: :devise_controller?
 
+  private
+
   def after_sign_in_path_for(resource)
     user_path(resource)
   end
@@ -11,6 +13,13 @@ class ApplicationController < ActionController::Base
 	protected
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:neme, :email])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:name]) # ログイン時にnameを使用
   end
-
+  def correct_user?(user)
+    if current_user.nil?
+      return false
+    else
+      user.id.equal?(current_user.id)
+    end
+  end
 end
